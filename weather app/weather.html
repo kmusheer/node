@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+
+<body>
+    <h1>Weather App</h1>
+    <form id="weatherForm">
+        <label for="city">Enter City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter city name">
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <div id="weatherResult"></div>
+
+    <script>
+        const weatherForm = document.getElementById('weatherForm');
+        const weatherResult = document.getElementById('weatherResult');
+        weatherForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const cityName = document.getElementById('city').value;
+
+            try {
+                const response = await fetch(`http://localhost:3000/?city=${cityName}`); // Update with your backend URL
+                const data = await response.text(); // Assuming the response is HTML
+                console.log('data', data)
+                weatherResult.innerHTML = data; // Display weather data
+                document.getElementById('city').value = ""; // Reset the input field value to an empty string     
+            } catch (error) {
+                console.log('response', response)
+                console.error('Error fetching weather data:', error);
+            }
+        });
+
+    </script>
+</body>
+</html>
